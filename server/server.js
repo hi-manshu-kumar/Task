@@ -2,6 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const upload = require('./middleware/upload');
 const csvData = require('./middleware/csv-parser');
+const csv = require('csv-parser');
+const path = require('path');
+const fs = require('fs');
 
 const app = express();
 app.use(express.urlencoded({
@@ -28,9 +31,30 @@ app.post('/api/uploadFile',  (req, res) => {
     });
 });
 
-app.get('/api/serveData', (req, res) => {
-    let data = csvData();
-    res.status(200).json({data, success:true});
+app.get('/api/serveData/trip-location', (req, res) => {
+    // let data = csvData();
+    // res.status(200).json({data, success:true});
+    let results = [];
+    let tripLatLongs = [];
+    console.log(path.join(__dirname, '../../uploads/file.csv'));
+    fs.createReadStream(path.join(__dirname, '../uploads/file.csv'))
+    .pipe(csv())
+    .on('data', (data) => results.push(data))
+    .on('end', () => {
+        console.log(results);
+        results = results.slice(1, (results.length)/10000);
+
+        tripLatLongs = results.map(element => {
+            return {
+                from_lat: element.from_lat,
+                from_long: element.from_long,
+                to_lat: element.to_lat,
+                to_long: element.to_long
+            };
+        });
+
+        res.status(200).json({tripLoc: tripLatLongs});
+    });
 });
 
 // DEFAULT
