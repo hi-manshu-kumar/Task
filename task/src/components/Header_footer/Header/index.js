@@ -1,27 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
-class Header extends Component {
-    render() {
+const styles = theme => ({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      padding: theme.spacing.unit * 2,
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+});
+
+const Header = (props) =>  {
+        
+        const {classes} = props 
+
         return (
-            <header className="bck_b_light">
-                <div className="container">
-                    <div className="left">
-                        <div className="logo">
-                            WAVES
-                        </div>
-                    </div>
-                    <div className="right">
-                        <div className="top">
-                            LINKS
-                        </div>
-                        <div className="bottom">
-                            LINKS
-                        </div>
-                    </div>
-                </div>
+            <header className={classes.root} >
+                <Grid container spacing={24}>
+                    <Grid item xs={12} sm={12}>
+                    <Paper className={classes.paper}>Locale.ai Task</Paper>
+                    </Grid>
+                </Grid>
             </header>
         );
-    }
 }
 
-export default Header;
+export default withStyles(styles)(Header);
