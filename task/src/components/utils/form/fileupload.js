@@ -1,7 +1,7 @@
 import React,{Component}  from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
-import { Button, Icon, Dimmer, Loader, Image, Segment } from 'semantic-ui-react';
+import { Button, Icon, Loader,  } from 'semantic-ui-react';
 import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 import Dropzone from 'react-dropzone';

@@ -32,7 +32,7 @@ app.post('/api/uploadFile',  (req, res) => {
 });
 
 app.get('/api/serveData/trip-location', (req, res) => {
-    // let data = csvData();
+
     // res.status(200).json({data, success:true});
     let results = [];
     let tripLatLongs = [];
@@ -42,7 +42,7 @@ app.get('/api/serveData/trip-location', (req, res) => {
     .on('data', (data) => results.push(data))
     .on('end', () => {
         console.log(results);
-        results = results.slice(1, (results.length)/10000);
+        results = results.slice(1, (results.length)/1000);
 
         tripLatLongs = results.map(element => {
             return {
