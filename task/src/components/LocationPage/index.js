@@ -30,13 +30,9 @@ class SelectLocation extends Component{
             viewport: {
                 width: 1000,
                 height: 600,
-                // width:"100%",
-                // height:"100%",
-                latitude: 37.785164,
-                longitude: -100,
-                // latitude: 12.96691,
-                // longitude: 77.74935,
-                zoom: 3.5
+                latitude: 12.99313,
+                longitude: 77.59828,
+                zoom: 11
             },
             citiD:null,
             popupInfo: null
@@ -57,6 +53,7 @@ class SelectLocation extends Component{
     }
 
     _renderCityMarker = (city, index) => {
+        // if(city.longitude != null || city.latitude != null) 
         return (
           <Marker 
             key={`marker-${index}`}
@@ -83,15 +80,14 @@ class SelectLocation extends Component{
     }
 
     componentDidMount(){
-        axios.get('/api/dummyData')
+        axios.get('/api/serveData/trip-location')
             .then(data => {
-                this.setState({citiD:data.data})            //fetching the data from backend and updating in state to render in map
+                console.log(data);
+                this.setState({citiD:data.data.tripLoc})            //fetching the data from backend and updating in state to render in map
             });
     }
 
     render(){
-        const points = [[77.62664,12.92768],
-        [77.60668, 13.07746]];
         const {citiD} = this.state;
         return(
             <div className="main_content">
