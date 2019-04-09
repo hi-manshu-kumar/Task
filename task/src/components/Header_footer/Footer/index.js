@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
     return (
         <footer>
-            <p>This is footer</p>
+            <p>Made with MERN stack.</p>
         </footer>
     );
 };

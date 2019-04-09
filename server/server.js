@@ -82,7 +82,7 @@ app.get('/api/serveData/trip-location', (req, res) => {
 
 app.get('/api/serveData/booking-method', (req, res) => {
     let results = [];
-    let tripLatLongs = [];
+    let bookingData = [];
     console.log(path.join(__dirname, '../../uploads/file.csv'));
     fs.createReadStream(path.join(__dirname, '../uploads/file.csv'))
     .pipe(csv())
@@ -90,29 +90,33 @@ app.get('/api/serveData/booking-method', (req, res) => {
     .on('end', () => {
         results = results.slice(1, (results.length));
 
-        // tripLatLongs = results.reduce((accumulator, element) => {
-        //     // accumulator[element.online_booking] = ( accumulator[element.online_booking]||0) + 1;
-        //     // accumulator[element.mobile_site_booking] = ( accumulator[element.mobile_site_booking]||0) + 1;
-        //     if(element.online_booking==1){
-        //         accumulator.online_booking++;
-        //     }
-        //     if(element.mobile_site_booking==1){
-        //         accumulator.mobile_site_booking++;
-        //     }
-        //     return accumulator;
-        // }, {online_booking:0, mobile_site_booking:0});
-        tripLatLongs = results.map(element => {
-                        
+        bookingData = results.map(element => {                                      //for getting the data of booking and data
             return {
                 mobile_site_booking : Number(element.mobile_site_booking),
                 online_booking      : Number(element.online_booking),
-                createdAt           : element.booking_created
-                // to_lat: element.to_lat,
-                // to_long: element.to_long
+                createdAt           : element.booking_created.split(" ")[0]
             }
-        });
-        // console.log(tripLatLongs)
-        res.status(200).json({tripLoc: tripLatLongs});
+        }).reduce((accumulator, element) => {
+            // accumulator[element.online_booking] = ( accumulator[element.online_booking]||0) + 1;
+            // accumulator[element.mobile_site_booking] = ( accumulator[element.mobile_site_booking]||0) + 1;
+            let x=0,y=0;
+            if(element.online_booking==1){
+                // accumulator.online_booking++;
+                x++;
+            }
+            if(element.mobile_site_booking==1){
+                // accumulator.mobile_site_booking++;
+                y++
+            }
+            if(element.createdAt){
+                accumulator.push({y:x,x: new Date(element.createdAt), z:y})
+            }
+            return accumulator;
+        }, 
+        // {online_booking:0, mobile_site_booking:0, createdAt: ""}
+        []);
+        
+        res.status(200).json({stats: bookingData});
     });
 });
 

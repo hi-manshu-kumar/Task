@@ -53,7 +53,6 @@ class SelectLocation extends Component{
     }
 
     _renderCityMarker = (city, index) => {
-        // if(city.longitude != null || city.latitude != null) 
         return (
           <Marker 
             key={`marker-${index}`}
