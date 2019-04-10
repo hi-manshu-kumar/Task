@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import '../../../node_modules/react-vis/dist/style.css';
-import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis,xType} from 'react-vis';
+import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
 import Axios from 'axios';
+
 
 
 // var LineChart = require("react-chartjs").Line;
@@ -31,9 +32,7 @@ class ViewChart extends Component{
         Axios.get('api/serveData/booking-method').then(data => {
             console.log(data.data.stats);
             this.setState({citiD:data.data.stats})            //fetching the data from backend and updating in state to render in map
-        })
-        console.log(this.state.citiD);
-
+        }).catch(err => console.error(err) );
     }
     
     render(){

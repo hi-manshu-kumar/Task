@@ -18,7 +18,6 @@ class Home extends Component {
             <div className="main_content">
                 <div className="tile">
                     <h1> Upload CSV file </h1>
-
                     <FileUpload className="dropzone_box" />
                 </div>
             </div>

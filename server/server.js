@@ -97,24 +97,42 @@ app.get('/api/serveData/booking-method', (req, res) => {
                 createdAt           : element.booking_created.split(" ")[0]
             }
         }).reduce((accumulator, element) => {
-            // accumulator[element.online_booking] = ( accumulator[element.online_booking]||0) + 1;
-            // accumulator[element.mobile_site_booking] = ( accumulator[element.mobile_site_booking]||0) + 1;
+
             let x=0,y=0;
             if(element.online_booking==1){
-                // accumulator.online_booking++;
                 x++;
             }
             if(element.mobile_site_booking==1){
-                // accumulator.mobile_site_booking++;
                 y++
             }
             if(element.createdAt){
-                accumulator.push({y:x,x: new Date(element.createdAt), z:y})
+                accumulator.forEach((elem, index) => {
+                    if(!elem){
+                        console.log("hi2", accumulator)
+                        accumulator.push({y:x,x: element.createdAt, z:y})           // if no element is present in accumulator i.e at statrting
+                    }
+                    if(elem.x == element.createdAt){                                //if we have elmeent with same date
+                        if(element.online_booking==1){
+                            // accumulator.online_booking++;
+                            // x++;
+                            accumulator[index].y++;
+                        }
+                        if(element.mobile_site_booking==1){
+                            // accumulator.mobile_site_booking++;
+                            // y++
+                            accumulator[index].z++;
+                        }
+
+                        return accumulator;
+                    } 
+                })
+                accumulator.push({y:x,x: element.createdAt, z:y})
             }
+            
             return accumulator;
         }, 
-        // {online_booking:0, mobile_site_booking:0, createdAt: ""}
-        []);
+        []);                                                                        // {online_booking:0, mobile_site_booking:0, createdAt: ""}
+        console.log(bookingData);
         
         res.status(200).json({stats: bookingData});
     });
