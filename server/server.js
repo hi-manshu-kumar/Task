@@ -108,7 +108,7 @@ app.get('/api/serveData/booking-method', (req, res) => {
             if(element.createdAt){
                 accumulator.forEach((elem, index) => {
                     if(!elem){
-                        console.log("hi2", accumulator)
+                        // console.log("hi2", accumulator)
                         accumulator.push({y:x,x: element.createdAt, z:y})           // if no element is present in accumulator i.e at statrting
                     }
                     if(elem.x == element.createdAt){                                //if we have elmeent with same date
@@ -132,7 +132,7 @@ app.get('/api/serveData/booking-method', (req, res) => {
             return accumulator;
         }, 
         []);                                                                        // {online_booking:0, mobile_site_booking:0, createdAt: ""}
-        console.log(bookingData);
+        // console.log(bookingData);
         
         res.status(200).json({stats: bookingData});
     });

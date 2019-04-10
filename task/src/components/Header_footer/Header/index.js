@@ -1,10 +1,10 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Segment,Container } from 'semantic-ui-react';
 
 const Header = () => {
   	return (
 		<header>
-			<Segment raised className="header_name"><h1>XRider Visualizer</h1></Segment>
+			<h1><Container textAlign='center'  className="header" >Xrider Visualizer</Container></h1>
 		</header>
 	);
 }

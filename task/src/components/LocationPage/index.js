@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import { Grid} from 'semantic-ui-react';
 import ReactMapGL, {Marker, Popup ,NavigationControl, FullscreenControl} from 'react-map-gl';
 import axios from 'axios';
+import NProgress from 'nprogress';
+import { SemanticToastContainer, toast } from 'react-semantic-toasts';
+
 
 import CityPin from './city-pin';
 import CityInfo from './city-info';
@@ -79,10 +82,28 @@ class SelectLocation extends Component{
     }
 
     componentDidMount(){
+        NProgress.start();
+
         axios.get('/api/serveData/trip-location')
             .then(data => {
+                NProgress.done();
+
                 console.log(data);
                 this.setState({citiD:data.data.tripLoc})            //fetching the data from backend and updating in state to render in map
+            }).catch(err => {
+                NProgress.done();
+                setTimeout(() => {
+                    toast({
+                        type: 'warning',
+                        icon: 'envelope',
+                        title: 'Error',
+                        description: 'Oops!! Something went wrong while featching of data...',
+                        animation: 'bounce',
+                        time: 5000
+                        // onClick: () => alert('you click on the toast'),
+                        // onClose: () => alert('you close this toast')
+                    });
+                }, 1000);
             });
     }
 
@@ -90,13 +111,14 @@ class SelectLocation extends Component{
         const {citiD} = this.state;
         return(
             <div className="main_content">
-                <Grid  columns={3}>
+                <Grid  columns={3} className="data-viz">
                     <Grid.Row>
                         <Grid.Column width={1}>
                         </Grid.Column>
 
-                        <Grid.Column width={10} >
-                            <ReactMapGL
+                        <Grid.Column width={10} className="data-viz">
+                        <div className="data-viz">
+                            <ReactMapGL 
                                 mapboxApiAccessToken="pk.eyJ1IjoiaGltYW5raGQiLCJhIjoiY2p1NzAwcTk4MWsxcjRlbnJvMHZqbnA2NCJ9.TWHl2ZQf7BJQV6oQDEuk8A"
                                 {...this.state.viewport}
                                 mapStyle="mapbox://styles/mapbox/dark-v9"
@@ -116,11 +138,13 @@ class SelectLocation extends Component{
                             </div>
 
                         </ReactMapGL>
+                        </div>
                         </Grid.Column>
                         <Grid.Column width={1}>
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
+				<SemanticToastContainer position="top-right" />
             </div>
         );
     }
