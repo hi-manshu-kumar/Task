@@ -8,7 +8,19 @@ header h1 div{
     width: 100% !important;
     color: white !important;    
     margin-top: 2rem !important;
+}
 
+.headerDiv{
+    width: 100%;
+    font-size: 2em;
+    position: absolute;
+    left: 10%;
+    top: 2%;
+}
+
+header {
+    color: white !important;    
+    background-color: #6FD9D8;
 }
 .header{
     width: 100%;
@@ -106,6 +118,14 @@ section.container{
     margin: 0% auto;
 }
 
+.active{
+    color: white
+}
+
+.navlink{
+    font-size: 1.5rem !important;
+}
+
 .wrap {
     background: #eaeaea;
     height: 100%;
@@ -138,3 +158,15 @@ footer p{
     text-align: center;
 }
 
+#nprogress .bar {
+    background: white !important;
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 10px white, 0 0 5px white !important;
+}
+
+#nprogress .spinner-icon {
+    border-top-color: white !important;
+    border-left-color: white !important;
+}

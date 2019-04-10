@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 
 import FileUpload from '../utils/form/fileupload';
+import NProgress from 'nprogress';
+
 
 class Home extends Component {
     constructor(){
@@ -11,6 +13,10 @@ class Home extends Component {
     handleClick = (e) => {
         e.preventDefault();
         console.log('hi');
+    }
+
+    componentDidMount(){
+        NProgress.done();
     }
 
     render(){

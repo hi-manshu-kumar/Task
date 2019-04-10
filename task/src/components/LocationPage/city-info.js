@@ -10,9 +10,9 @@ export default class CityInfo extends PureComponent {
     return (
       <div>
         <div>
-          {displayName}
+          {`Marker at ${displayName}`}
         </div>
-        <img width={240} src={info.image} />
+        <img width={240} src={info.image}  />
       </div>
     );
   }

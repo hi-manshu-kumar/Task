@@ -91,6 +91,9 @@ class FileUpload extends Component {
 		}
 	}
 		
+	componentWillUnmount(){
+        NProgress.done();
+    }
   
     render() {
         const files = this.state.files.map(file => (

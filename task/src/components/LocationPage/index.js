@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Grid} from 'semantic-ui-react';
-import ReactMapGL, {Marker, Popup ,NavigationControl, FullscreenControl} from 'react-map-gl';
+import ReactMapGL, {Marker, Popup ,NavigationControl, FullscreenControl, } from 'react-map-gl';
 import axios from 'axios';
 import NProgress from 'nprogress';
 import { SemanticToastContainer, toast } from 'react-semantic-toasts';
@@ -31,8 +31,8 @@ class SelectLocation extends Component{
     
         this.state = {
             viewport: {
-                width: 1000,
-                height: 600,
+                width: 1400,
+                height: 700,
                 latitude: 12.99313,
                 longitude: 77.59828,
                 zoom: 11
@@ -41,18 +41,9 @@ class SelectLocation extends Component{
             popupInfo: null
         };
     }
-    
-    renderPopup(){
-        return this.state.popupInfo && (
-          <Popup tipSize={5}
-            anchor="bottom-right"
-            longitude={this.state.popupInfo.state.longitude}
-            latitude={this.state.popupInfo.state.latitude}
-            onClose={() => this.setState({popupInfo: null})}
-            closeOnClick={true}>
-            <p>hi there</p>
-          </Popup>
-        )
+
+    _updateViewport = (viewport) => {
+        this.setState({viewport});
     }
 
     _renderCityMarker = (city, index) => {
@@ -60,8 +51,15 @@ class SelectLocation extends Component{
           <Marker 
             key={`marker-${index}`}
             longitude={city.longitude}
-            latitude={city.latitude} >
-            <CityPin size={20} onClick={() => this.setState({popupInfo: city})} />
+            latitude={city.latitude}
+            captureClick={true} >
+            <CityPin size={20} onClick={() => {
+                    const {viewport} = this.state;
+                    viewport.latitude=city.latitude;
+                    viewport.longitude=city.longitude;
+                    viewport.zoom=13;
+                    this.setState({viewport, popupInfo: city});
+                }} />
           </Marker>
         );
     }
@@ -74,6 +72,7 @@ class SelectLocation extends Component{
             anchor="top"
             longitude={popupInfo.longitude}
             latitude={popupInfo.latitude}
+            captureClick= {true}
             closeOnClick={false}
             onClose={() => this.setState({popupInfo: null})} >
             <CityInfo info={popupInfo} />
@@ -100,11 +99,14 @@ class SelectLocation extends Component{
                         description: 'Oops!! Something went wrong while featching of data...',
                         animation: 'bounce',
                         time: 5000
-                        // onClick: () => alert('you click on the toast'),
-                        // onClose: () => alert('you close this toast')
                     });
                 }, 1000);
             });
+    }
+
+
+    componentWillUnmount(){
+        NProgress.done();
     }
 
     render(){
@@ -123,10 +125,10 @@ class SelectLocation extends Component{
                                 {...this.state.viewport}
                                 mapStyle="mapbox://styles/mapbox/dark-v9"
 
-                                onViewportChange={(viewport) => this.setState({viewport})}
+                                onViewportChange={this._updateViewport}
                             >
 
-                            { this.state.citiD? citiD.map(this._renderCityMarker): <span>Waiting for data</span> }
+                            { this.state.citiD? citiD.map(this._renderCityMarker): <span >Waiting for data</span> }
                             {this._renderPopup()}
 
                             <div className="fullscreen" style={fullscreenControlStyle}>
