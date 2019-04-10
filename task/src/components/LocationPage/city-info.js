@@ -1,3 +1,4 @@
+
 import React, {PureComponent} from 'react';
 
 export default class CityInfo extends PureComponent {

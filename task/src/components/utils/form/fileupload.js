@@ -6,6 +6,8 @@ import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import NProgress from 'nprogress';
+
     
 class FileUpload extends Component {
     constructor() {
@@ -22,6 +24,8 @@ class FileUpload extends Component {
 	handleClick = (e) => {
 		e.preventDefault();
 		this.setState({uploading: true});
+		NProgress.start();
+		
 		if(this.state.files.length !== 0){
 
 			let formData = new FormData();
@@ -34,6 +38,7 @@ class FileUpload extends Component {
 				.then(response => {
 					console.log(response.data);
 					this.setState({uploading: false});
+					NProgress.done();
 
 					setTimeout(() => {
 						toast(
@@ -49,24 +54,27 @@ class FileUpload extends Component {
 						uploading:false
 					});
 					}).catch(err => {
-					console.log('error is', err);
-					this.setState({uploading: false});
-					
-					setTimeout(() => {
-						toast({
-							type: 'warning',
-							icon: 'envelope',
-							title: 'Warning Toast',
-							description: 'This is a Semantic UI toast wich waits 5 seconds before closing',
-							animation: 'bounce',
-							time: 5000
-							// onClick: () => alert('you click on the toast'),
-							// onClose: () => alert('you close this toast')
-						});
-					}, 1000);
+						console.log('error is', err);
+						this.setState({uploading: false});
+						NProgress.done();
+						
+						setTimeout(() => {
+							toast({
+								type: 'warning',
+								icon: 'envelope',
+								title: 'Error',
+								description: 'Something went wrong!! Please upload the csv file again....',
+								animation: 'bounce',
+								time: 5000
+								// onClick: () => alert('you click on the toast'),
+								// onClose: () => alert('you close this toast')
+							});
+						}, 1000);
 				})
 		} else if(this.state.files.length === 0){
 			this.setState({uploading: false});
+            NProgress.done();
+
 			setTimeout(() => {
 				toast({
 					type: 'warning',

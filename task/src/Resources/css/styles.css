@@ -4,6 +4,24 @@
     box-sizing: border-box;
 }
 
+header h1 div{
+    width: 100% !important;
+    color: white !important;    
+    margin-top: 2rem !important;
+
+}
+.header{
+    width: 100%;
+    background-color: transparent;
+    position: absolute;
+    margin: 0 auto;
+}
+
+header h1 {
+    min-height: 0rem;
+    height: 0px;
+}
+
 .header_name{
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -100,18 +118,23 @@ section.container{
     border: 1px solid #eaeaea;
 }
 
+.data-viz{
+    margin-top: 7rem ;
+}
+
 footer{
     background-color: #454749;
     color: #ffffff;
-    margin-top: 6.4%;
     width: 100%;
     height: 100px;
     font-size: 135%;
+    position: fixed;
+    bottom: 0;
 }
 
 footer p{
-    /* margin-top: 5%; */
     transform: translateY(3rem);
     color: #888;
     text-align: center;
 }
+

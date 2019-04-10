@@ -11,6 +11,7 @@
     "axios-progress-bar": "^1.2.0",
     "deck.gl": "^6.4.9",
     "here-maps-react": "^0.1.2",
+    "nprogress": "^0.2.0",
     "react": "^16.8.6",
     "react-chartjs": "^1.2.0",
     "react-dom": "^16.8.6",

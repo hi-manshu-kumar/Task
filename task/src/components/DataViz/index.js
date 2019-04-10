@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import '../../../node_modules/react-vis/dist/style.css';
 import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
 import Axios from 'axios';
-
-
-
-// var LineChart = require("react-chartjs").Line;
+import NProgress from 'nprogress';  
 
 class ViewChart extends Component{
     constructor(props){
@@ -29,10 +26,15 @@ class ViewChart extends Component{
         }) 
     }
     componentDidMount(){
+        NProgress.start();
         Axios.get('api/serveData/booking-method').then(data => {
-            console.log(data.data.stats);
+            // loadProgressBar()
+            NProgress.done();
             this.setState({citiD:data.data.stats})            //fetching the data from backend and updating in state to render in map
-        }).catch(err => console.error(err) );
+        }).catch(err => {
+            NProgress.done();
+            console.error(err);
+        });
     }
     
     render(){
@@ -42,21 +44,10 @@ class ViewChart extends Component{
             {x: new Date('03/18/2018'), y: 80},
             {x: new Date('04/15/2018'), y: 90}
         ];
-          const data2 = [
-            {x: 1, y: 8},
-            {x: 2, y: 5},
-            {x: 3, y: 4},
-            {x: 4, y: 9},
-            {x: 5, y: 1},
-            {x: 6, y: 7},
-            {x: 7, y: 6},
-            {x: 8, y: 3},
-            {x: 9, y: 2},
-            {x: 9, y: 0}
-          ];
+
         return(
-            <div className="main_content">
-                <div >
+            <div className="main_content ">
+                <div className="data-viz">
                     <XYPlot
                     xType="time"
                     height={600} width={1800}>
@@ -67,7 +58,6 @@ class ViewChart extends Component{
                             <LineSeries data={this.state.citiD? this.renderData(): data} />
                             <LineSeries data={this.state.citiD? this.renderDataZ(): data} style={{stroke: 'red'}}/>
                         
-                        {/* <LineSeries data={data2} /> */}
                     </XYPlot>
                 </div>
             </div>
