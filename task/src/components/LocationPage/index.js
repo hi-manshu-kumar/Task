@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import { Grid} from 'semantic-ui-react';
-import ReactMapGL, {Marker, Popup ,NavigationControl, FullscreenControl, } from 'react-map-gl';
+import { Container, Segment} from 'semantic-ui-react';
+import ReactMapGL, {Marker, Popup ,NavigationControl, FullscreenControl, FlyToInterpolator} from 'react-map-gl';
 import axios from 'axios';
+// import d3 from 'd3-ease';
+import * as d3 from "d3";
 import NProgress from 'nprogress';
 import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 
@@ -35,7 +37,13 @@ class SelectLocation extends Component{
                 height: 700,
                 latitude: 12.99313,
                 longitude: 77.59828,
-                zoom: 11
+                zoom: 11,
+                // transitionInterpolator: new FlyToInterpolator(),
+                // transitionDuration: 3000
+                transitionDuration: 3000,
+                transitionInterpolator: new FlyToInterpolator(),
+                transitionEasing: d3.easeCubic
+    
             },
             citiD:null,
             popupInfo: null
@@ -86,8 +94,6 @@ class SelectLocation extends Component{
         axios.get('/api/serveData/trip-location')
             .then(data => {
                 NProgress.done();
-
-                console.log(data);
                 this.setState({citiD:data.data.tripLoc})            //fetching the data from backend and updating in state to render in map
             }).catch(err => {
                 NProgress.done();
@@ -112,40 +118,31 @@ class SelectLocation extends Component{
     render(){
         const {citiD} = this.state;
         return(
-            <div className="main_content">
-                <Grid  columns={3} className="data-viz">
-                    <Grid.Row>
-                        <Grid.Column width={1}>
-                        </Grid.Column>
+            <div className="main_content" >
+                <Segment style={{backgroundColor: 'transparent'}} className="mapSegment data-viz"  >
+                <div >
+                    <ReactMapGL 
+                        mapboxApiAccessToken="pk.eyJ1IjoiaGltYW5raGQiLCJhIjoiY2p1NzAwcTk4MWsxcjRlbnJvMHZqbnA2NCJ9.TWHl2ZQf7BJQV6oQDEuk8A"
+                        {...this.state.viewport}
+                        mapStyle="mapbox://styles/mapbox/dark-v9"
 
-                        <Grid.Column width={10} className="data-viz">
-                        <div className="data-viz">
-                            <ReactMapGL 
-                                mapboxApiAccessToken="pk.eyJ1IjoiaGltYW5raGQiLCJhIjoiY2p1NzAwcTk4MWsxcjRlbnJvMHZqbnA2NCJ9.TWHl2ZQf7BJQV6oQDEuk8A"
-                                {...this.state.viewport}
-                                mapStyle="mapbox://styles/mapbox/dark-v9"
+                        onViewportChange={this._updateViewport}
+                    >
 
-                                onViewportChange={this._updateViewport}
-                            >
+                    { this.state.citiD? citiD.map(this._renderCityMarker): <span >Waiting for data</span> }
+                    {this._renderPopup()}
 
-                            { this.state.citiD? citiD.map(this._renderCityMarker): <span >Waiting for data</span> }
-                            {this._renderPopup()}
+                    <div className="fullscreen" style={fullscreenControlStyle}>
+                        <FullscreenControl />
+                    </div>
+                    
+                    <div className="nav" style={navStyle}>
+                        <NavigationControl onViewportChange={this._updateViewport} />
+                    </div>
 
-                            <div className="fullscreen" style={fullscreenControlStyle}>
-                                <FullscreenControl />
-                            </div>
-                            
-                            <div className="nav" style={navStyle}>
-                                <NavigationControl onViewportChange={this._updateViewport} />
-                            </div>
-
-                        </ReactMapGL>
-                        </div>
-                        </Grid.Column>
-                        <Grid.Column width={1}>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
+                    </ReactMapGL>
+                </div>
+                </Segment>
 				<SemanticToastContainer position="top-right" />
             </div>
         );

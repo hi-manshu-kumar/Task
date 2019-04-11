@@ -75,8 +75,8 @@ header h1 {
 
 .tile {
     background-color: #ffffff;
-    border-radius: .1rem;
-    box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, 0.2), 0 .25rem .25rem rgba(0, 0, 0, 0.2);
+    /* border-radius: .1rem; */
+    /* box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, 0.2), 0 .25rem .25rem rgba(0, 0, 0, 0.2); */
     width: 100%;
     position: relative;
     margin: 0 auto;
@@ -85,6 +85,9 @@ header h1 {
     overflow: hidden;
     padding: 2rem;
     text-align: center;
+}
+.shadow{
+    box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, 0.2), 0 .25rem .25rem rgba(0, 0, 0, 0.2);
 }
 
 section.container{
@@ -139,7 +142,13 @@ section.container{
 }
 
 .data-viz{
-    margin-top: 7rem ;
+    margin-top: 5rem !important;
+}
+
+.mapSegment{
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent;
 }
 
 footer{

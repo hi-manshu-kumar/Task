@@ -9,6 +9,8 @@
     "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
     "axios-progress-bar": "^1.2.0",
+    "d3": "^5.9.2",
+    "d3-ease": "^1.0.5",
     "deck.gl": "^6.4.9",
     "here-maps-react": "^0.1.2",
     "nprogress": "^0.2.0",
