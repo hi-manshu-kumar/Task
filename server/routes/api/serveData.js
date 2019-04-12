@@ -34,7 +34,6 @@ router.get('/booking-method', (req, res) => {
     fs.createReadStream(path.join(__dirname, '../../../uploads/file.csv'))
     .pipe(csv())
     .on('data', (data) => {
-    console.log(data.booking_created.split(" ")[0])
         results.push({
             mobile_site_booking : Number(data.mobile_site_booking),
             online_booking      :Number(data.online_booking),

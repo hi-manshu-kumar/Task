@@ -14,7 +14,6 @@ class Home extends Component {
 
     handleClick = (e) => {
         e.preventDefault();
-        console.log('hi');
     }
 
     componentDidMount(){

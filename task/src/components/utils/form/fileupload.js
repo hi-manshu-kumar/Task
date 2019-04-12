@@ -22,10 +22,7 @@ class FileUpload extends Component {
 			uploading: false
 		};
 	}
-	
-	// setTimeoutFunction = (dur, perform) => {
-	// 	setTimeout(() => perform, dur);
-	// }
+
 
 	handleClick = (e) => {
 		e.preventDefault();
@@ -39,10 +36,8 @@ class FileUpload extends Component {
 				header: {'content-type': 'multipart/form-data'}
 			}
 			formData.append('file', this.state.files[0]);
-			console.log(formData, this.state.files[0]);
 			axios.post('/api/uploadFile', formData, config)
 				.then(response => {
-					console.log(response.data);
 					this.setState({uploading: false});
 					NProgress.done();
 
@@ -59,7 +54,6 @@ class FileUpload extends Component {
 						uploading:false
 					});
 				}).catch(err => {
-						console.log('error is', err);
 						this.setState({uploading: false});
 						NProgress.done();
 
