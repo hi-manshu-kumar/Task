@@ -105,6 +105,14 @@ class SelectLocation extends Component{
                         time: 5000
                     }));
             });
+        // window.addEventListener('resize', debounce(function onResize() { // <-- debounce
+        //     this.setState({
+        //         viewport: assign({}, this.state.viewport, {
+        //         width: window.innerWidth,
+        //         height: window.innerHeight
+        //         })
+        //     });
+        //     }.bind(this)), 100);
     }
 
 

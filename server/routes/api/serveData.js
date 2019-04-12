@@ -9,18 +9,14 @@ router.get('/trip-location', (req, res) => {
     let tripLatLongs = [];
     fs.createReadStream(path.join(__dirname, '../../../uploads/file.csv'))
     .pipe(csv())
-    .on('data', (data) => results.push(data))
+    .on('data', (data) => {
+        if(Number(data.from_lat) && Number(data.from_long))
+            results.push(data)
+    })
     .on('end', () => {
         results = results.slice(1, (results.length)/10);
 
         tripLatLongs = results
-        .filter(
-            element =>
-            {
-                if(Number(element.from_lat) && Number(element.from_long))
-                return element;
-            }
-        )
         .map(element => {
           return {
             latitude: Number(element.from_lat),
@@ -37,17 +33,18 @@ router.get('/booking-method', (req, res) => {
     let bookingData = [];
     fs.createReadStream(path.join(__dirname, '../../../uploads/file.csv'))
     .pipe(csv())
-    .on('data', (data) => results.push(data))
+    .on('data', (data) => {
+    console.log(data.booking_created.split(" ")[0])
+        results.push({
+            mobile_site_booking : Number(data.mobile_site_booking),
+            online_booking      :Number(data.online_booking),
+            createdAt           : data.booking_created.split(" ")[0]
+        })}
+    )
     .on('end', () => {
         results = results.slice(1, (results.length));
 
-        bookingData = results.map(element => {                                      //for getting the data of booking and data
-            return {
-                mobile_site_booking : Number(element.mobile_site_booking),
-                online_booking      : Number(element.online_booking),
-                createdAt           : element.booking_created.split(" ")[0]
-            }
-        }).reduce((accumulator, element) => {
+        bookingData = results.reduce((accumulator, element) => {
 
             let x=0,y=0;
             if(element.online_booking==1){
