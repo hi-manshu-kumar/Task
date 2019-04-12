@@ -12,7 +12,7 @@ import {
     DiscreteColorLegend } from 'react-vis';
 import Axios from 'axios';
 import NProgress from 'nprogress';  
-import {Segment } from 'semantic-ui-react';
+import {Segment, Button, Container,Loader } from 'semantic-ui-react';
 
 import {setTimeoutFunction} from '../utils/setTimeoutFunc';
 
@@ -20,6 +20,7 @@ class ViewChart extends Component{
     constructor(props){
         super(props)
         this.state = {
+            loading: true,
             citiD: null,
             lastDrawLocation: null
         }
@@ -42,9 +43,8 @@ class ViewChart extends Component{
     componentDidMount(){
         NProgress.start();
         Axios.get('api/serveData/booking-method').then(data => {
-            // loadProgressBar()
             NProgress.done();
-            this.setState({citiD:data.data.stats})            //fetching the data from backend and updating in state to render in map
+            this.setState({citiD:data.data.stats, loading: false})            //fetching the data from backend and updating in state to render in map
         }).catch(err => {
             NProgress.done();
             setTimeoutFunction(1000, 
@@ -56,7 +56,7 @@ class ViewChart extends Component{
                     animation: 'bounce',
                     time: 5000
                 }));
-            console.error(err);
+            this.setState({loading: false})
         });
     }
     
@@ -72,9 +72,9 @@ class ViewChart extends Component{
         return(
             <div className="main_content ">
                 <Segment style={{backgroundColor: 'transparent'}} className="mapSegment data-viz"  >
-
-                <div className="data-viz">
-                
+                <Container textAlign="center"> <h2>Visualization of bookings done</h2>
+                 through Mobile and Webiste plotted on time axis. </Container>
+            <div className="data-viz">
                     <XYPlot
                     xType="time"
                     height={600} width={1800}
@@ -90,6 +90,7 @@ class ViewChart extends Component{
                           lastDrawLocation.top
                         ]
                     }>
+                    <Loader active={this.state.loading} inline='centered' style={{left: '0px', top: '-25rem'}} />
                     <DiscreteColorLegend
                                 style={{position: 'absolute', left: '80px', top: '10px'}}
                                 orientation="horizontal"
@@ -126,12 +127,12 @@ class ViewChart extends Component{
 
                     </XYPlot>
                 </div>
-                <button
+                <Container textAlign='center' >
+                <Button  
                     className="showcase-button"
-                    onClick={() => this.setState({lastDrawLocation: null})}
-                    >
-                    Reset Zoom
-                </button>
+                    onClick={() => this.setState({lastDrawLocation: null})}                
+                    content='Reset Zoom' />
+                </Container>
                 </Segment>
                 <SemanticToastContainer position="top-right" />
             </div>

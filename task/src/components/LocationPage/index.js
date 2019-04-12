@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Segment} from 'semantic-ui-react';
+import {Segment,Loader} from 'semantic-ui-react';
 import ReactMapGL, {Marker, Popup ,NavigationControl, FullscreenControl, FlyToInterpolator} from 'react-map-gl';
 import axios from 'axios';
 import * as d3 from "d3";
@@ -126,7 +126,7 @@ class SelectLocation extends Component{
                         onViewportChange={this._updateViewport}
                     >
 
-                        { this.state.citiD? citiD.map(this._renderCityMarker): <span >Waiting for data</span> }
+                        { this.state.citiD? citiD.map(this._renderCityMarker): <Loader active inline='centered' /> }
                         {this._renderPopup()}
 
                         <div className="fullscreen" style={fullscreenControlStyle}>
