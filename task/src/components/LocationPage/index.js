@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Container, Segment} from 'semantic-ui-react';
+import {Segment} from 'semantic-ui-react';
 import ReactMapGL, {Marker, Popup ,NavigationControl, FullscreenControl, FlyToInterpolator} from 'react-map-gl';
 import axios from 'axios';
 // import d3 from 'd3-ease';
