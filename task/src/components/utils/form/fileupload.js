@@ -9,6 +9,7 @@ import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import NProgress from 'nprogress';
 
+import {setTimeoutFunction} from '../setTimeoutFunc';
     
 class FileUpload extends Component {
     constructor() {
@@ -22,6 +23,10 @@ class FileUpload extends Component {
 		};
 	}
 	
+	// setTimeoutFunction = (dur, perform) => {
+	// 	setTimeout(() => perform, dur);
+	// }
+
 	handleClick = (e) => {
 		e.preventDefault();
 		this.setState({uploading: true});
@@ -41,7 +46,7 @@ class FileUpload extends Component {
 					this.setState({uploading: false});
 					NProgress.done();
 
-					setTimeout(() => {
+					setTimeoutFunction(1000, 
 						toast(
 							{
 								title: 'Success',
@@ -49,17 +54,16 @@ class FileUpload extends Component {
 							},
 							() => this.props.history.push('/select-location'),
 							// () => console.log('toast clicked')
-							);
-						}, 1000);
+						));
 					return this.setState({
 						uploading:false
 					});
-					}).catch(err => {
+				}).catch(err => {
 						console.log('error is', err);
 						this.setState({uploading: false});
 						NProgress.done();
-						
-						setTimeout(() => {
+
+						setTimeoutFunction(1000, 
 							toast({
 								type: 'warning',
 								icon: 'envelope',
@@ -69,8 +73,8 @@ class FileUpload extends Component {
 								time: 5000
 								// onClick: () => alert('you click on the toast'),
 								// onClose: () => alert('you close this toast')
-							});
-						}, 1000);
+							})
+						);
 				})
 		} else if(this.state.files.length === 0){
 			this.setState({uploading: false});

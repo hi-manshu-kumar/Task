@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Segment} from 'semantic-ui-react';
 import ReactMapGL, {Marker, Popup ,NavigationControl, FullscreenControl, FlyToInterpolator} from 'react-map-gl';
 import axios from 'axios';
-// import d3 from 'd3-ease';
 import * as d3 from "d3";
 import NProgress from 'nprogress';
 import { SemanticToastContainer, toast } from 'react-semantic-toasts';
@@ -10,6 +9,7 @@ import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 
 import CityPin from './city-pin';
 import CityInfo from './city-info';
+import {setTimeoutFunction} from '../utils/setTimeoutFunc';
 
 const fullscreenControlStyle = {
     position: 'absolute',
@@ -33,19 +33,17 @@ class SelectLocation extends Component{
     
         this.state = {
             viewport: {
-                width: 1400,
-                height: 700,
-                latitude: 12.99313,
-                longitude: 77.59828,
-                zoom: 11,
-                // transitionInterpolator: new FlyToInterpolator(),
-                // transitionDuration: 3000
-                transitionDuration: 3000,
+                width                 : 1400,
+                height                : 700,
+                latitude              : 12.99313,
+                longitude             : 77.59828,
+                zoom                  : 11,
+                transitionDuration    : 3000,
                 transitionInterpolator: new FlyToInterpolator(),
-                transitionEasing: d3.easeCubic
+                transitionEasing      : d3.easeCubic
     
             },
-            citiD:null,
+            citiD    : null,
             popupInfo: null
         };
     }
@@ -97,7 +95,7 @@ class SelectLocation extends Component{
                 this.setState({citiD:data.data.tripLoc})            //fetching the data from backend and updating in state to render in map
             }).catch(err => {
                 NProgress.done();
-                setTimeout(() => {
+                setTimeoutFunction(1000,
                     toast({
                         type: 'warning',
                         icon: 'envelope',
@@ -105,8 +103,7 @@ class SelectLocation extends Component{
                         description: 'Oops!! Something went wrong while featching of data...',
                         animation: 'bounce',
                         time: 5000
-                    });
-                }, 1000);
+                    }));
             });
     }
 
@@ -129,16 +126,16 @@ class SelectLocation extends Component{
                         onViewportChange={this._updateViewport}
                     >
 
-                    { this.state.citiD? citiD.map(this._renderCityMarker): <span >Waiting for data</span> }
-                    {this._renderPopup()}
+                        { this.state.citiD? citiD.map(this._renderCityMarker): <span >Waiting for data</span> }
+                        {this._renderPopup()}
 
-                    <div className="fullscreen" style={fullscreenControlStyle}>
-                        <FullscreenControl />
-                    </div>
-                    
-                    <div className="nav" style={navStyle}>
-                        <NavigationControl onViewportChange={this._updateViewport} />
-                    </div>
+                        <div className="fullscreen" style={fullscreenControlStyle}>
+                            <FullscreenControl />
+                        </div>
+                        
+                        <div className="nav" style={navStyle}>
+                            <NavigationControl onViewportChange={this._updateViewport} />
+                        </div>
 
                     </ReactMapGL>
                 </div>

@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import '../../../node_modules/react-vis/dist/style.css';
-import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis,Crosshair, Highlight,  DiscreteColorLegend } from 'react-vis';
+import { SemanticToastContainer, toast } from 'react-semantic-toasts';
+import {
+    XYPlot,
+    LineSeries,
+    VerticalGridLines, 
+    HorizontalGridLines, 
+    XAxis, 
+    YAxis, 
+    Highlight, 
+    DiscreteColorLegend } from 'react-vis';
 import Axios from 'axios';
 import NProgress from 'nprogress';  
 import {Segment } from 'semantic-ui-react';
+
+import {setTimeoutFunction} from '../utils/setTimeoutFunc';
 
 class ViewChart extends Component{
     constructor(props){
         super(props)
         this.state = {
             citiD: null,
+            lastDrawLocation: null
         }
     }
-
-    state = {
-        lastDrawLocation: null}
 
     renderData = () =>{
         const {citiD} = this.state;
@@ -38,17 +47,26 @@ class ViewChart extends Component{
             this.setState({citiD:data.data.stats})            //fetching the data from backend and updating in state to render in map
         }).catch(err => {
             NProgress.done();
+            setTimeoutFunction(1000, 
+                toast({
+                    type: 'warning',
+                    icon: 'envelope',
+                    title: 'Error',
+                    description: 'Oops!! Something went wrong while featching of data...',
+                    animation: 'bounce',
+                    time: 5000
+                }));
             console.error(err);
         });
     }
     
     render(){
-        const {series, lastDrawLocation} = this.state;
+        const {lastDrawLocation} = this.state;
         const data = [        
-            {x: new Date('01/01/2018'), y: 0},
-            {x: new Date('01/14/2018'), y: 0},
-            {x: new Date('03/18/2018'), y: 0},
-            {x: new Date('04/15/2018'), y: 0}
+            {x: 0, y: 0},
+            {x: 0, y: 0},
+            {x: 0, y: 0},
+            {x: 0, y: 0}
         ];
 
         return(
@@ -109,12 +127,13 @@ class ViewChart extends Component{
                     </XYPlot>
                 </div>
                 <button
-                        className="showcase-button"
-                        onClick={() => this.setState({lastDrawLocation: null})}
-                        >
-                        Reset Zoom
+                    className="showcase-button"
+                    onClick={() => this.setState({lastDrawLocation: null})}
+                    >
+                    Reset Zoom
                 </button>
                 </Segment>
+                <SemanticToastContainer position="top-right" />
             </div>
         )
     }
