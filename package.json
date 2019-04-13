@@ -1,22 +1,23 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Locale.ai task to visualize xrider data.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js",
-    "server": "nodemon server/server.js",
-    "client": "npm run start --prefix task",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test"            : "echo \"Error: no test specified\" && exit 1",
+    "start"           : "node server/server.js",
+    "server"          : "nodemon server/server.js",
+    "client"          : "npm run start --prefix task",
+    "install_file"         : "npm install --prefix task && npm install",
+    "dev"             : "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix task && npm run build --prefix task"
   },
   "engines": {
     "node": "8.15.1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Hi-manshu-kumar",
+  "license": "MIT",
   "dependencies": {
     "concurrently": "^4.1.0",
     "csv-parser": "^2.2.0",
@@ -24,5 +25,14 @@
     "express-formidable": "^1.2.0",
     "morgan": "^1.9.1",
     "multer": "^1.4.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hi-manshu-kumar/Task.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hi-manshu-kumar/Task/issues"
+  },
+  "homepage": "https://github.com/hi-manshu-kumar/Task#readme"
 }

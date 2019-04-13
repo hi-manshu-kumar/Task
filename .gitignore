@@ -1,4 +1,5 @@
-/task/node_modules
+/client
+/client/node_modules
 /.vscode
 /node_modules
 .env

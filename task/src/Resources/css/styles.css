@@ -75,8 +75,7 @@ header h1 {
 
 .tile {
     background-color: #ffffff;
-    /* border-radius: .1rem; */
-    /* box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, 0.2), 0 .25rem .25rem rgba(0, 0, 0, 0.2); */
+
     width: 100%;
     position: relative;
     margin: 0 auto;

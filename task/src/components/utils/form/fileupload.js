@@ -106,7 +106,7 @@ class FileUpload extends Component {
 				<Dropzone 
 					onDrop={this.onDrop}
 					multiple={false}
-					accept="text/csv"
+					accept=".csv"
 					>
 						{({getRootProps, getInputProps}) => (
 							<section className="container">
