@@ -8,7 +8,6 @@
     "start"           : "node server/server.js",
     "server"          : "nodemon server/server.js",
     "client"          : "npm run start --prefix task",
-    "install_file"         : "npm install --prefix task && npm install",
     "dev"             : "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix task && npm run build --prefix task"
   },

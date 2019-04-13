@@ -9,7 +9,9 @@ This web app takes a csv file as a upload and perform map rendering and data vis
 With [npm](https://npmjs.org/) installed, run
 
 ```
-$ npm run install_file
+$ npm install
+$ cd task
+$ npm install
 ```
 
 ## Usage
