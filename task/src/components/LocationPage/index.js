@@ -33,8 +33,8 @@ class SelectLocation extends Component{
     
         this.state = {
             viewport: {
-                width                 : 1400,
-                height                : 700,
+                width:"87.5rem",
+                height:"43.750rem",
                 latitude              : 12.99313,
                 longitude             : 77.59828,
                 zoom                  : 11,
@@ -122,7 +122,8 @@ class SelectLocation extends Component{
                         mapboxApiAccessToken="pk.eyJ1IjoiaGltYW5raGQiLCJhIjoiY2p1NzAwcTk4MWsxcjRlbnJvMHZqbnA2NCJ9.TWHl2ZQf7BJQV6oQDEuk8A"
                         {...this.state.viewport}
                         mapStyle="mapbox://styles/mapbox/dark-v9"
-
+                        // width="100%"
+                        // height="100%"
                         onViewportChange={this._updateViewport}
                     >
 
