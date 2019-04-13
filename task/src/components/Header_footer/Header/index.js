@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Dropdown, Responsive, Segment,Icon} from 'semantic-ui-react';
+import { Container, Dropdown, Responsive} from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom'
 
 const Header = () => {

@@ -4,13 +4,9 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "axios-progress-bar": "^1.2.0",
     "d3": "^5.9.2",
-    "d3-ease": "^1.0.5",
-    "here-maps-react": "^0.1.2",
     "nprogress": "^0.2.0",
     "react": "^16.8.6",
-    "react-chartjs": "^1.2.0",
     "react-dom": "^16.8.6",
     "react-dropzone": "^10.1.0",
     "react-map-gl": "^4.1.1",
